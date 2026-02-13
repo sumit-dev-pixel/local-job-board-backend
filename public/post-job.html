@@ -1,0 +1,124 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Post a Job | LocalJobs</title>
+  <link rel="stylesheet" href="post-job.css">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+<header class="header">
+  <div class="logo">Local<span>Jobs</span></div>
+
+  <div class="menu-toggle" id="menuToggle">☰</div>
+
+  <nav class="nav-links" id="navLinks">
+    <a href="index.html">Home</a>
+    <a href="find-job.html">Search Jobs</a>
+    
+    <a href="post-job.html">Post Job</a>
+  </nav>
+
+  <a href="#" class="login-btn">Employer Login</a>
+</header>
+
+<section class="page-title">
+  <h1>Post a New Job</h1>
+  <p>Hire trusted local workers easily</p>
+</section>
+
+<section class="form-section">
+  <form class="job-form" id="jobForm">
+
+    <div class="form-group">
+      <label>Job Title</label>
+      <input type="text" id="title" required placeholder="Electrician, Driver...">
+    </div>
+
+    <div class="form-group">
+      <label>Company Name</label>
+      <input type="text" id="company_name" required placeholder="Company Name">
+    </div>
+
+    <div class="form-row">
+      <div class="form-group">
+        <label>Location</label>
+        <input type="text" id="location" required placeholder="Mumbai">
+      </div>
+
+      <div class="form-group">
+        <label>Salary (per month)</label>
+        <input type="text" id="salary" required placeholder="₹15,000">
+      </div>
+    </div>
+
+    <div class="form-row">
+      <div class="form-group">
+        <label>Job Type</label>
+        <select id="type">
+          <option>Full Time</option>
+          <option>Part Time</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label>Experience</label>
+        <select id="experience">
+          <option>Fresher</option>
+          <option>1-2 Years</option>
+          <option>2+ Years</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label>Job Description</label>
+      <textarea id="job_description" rows="4" placeholder="Job responsibilities..."></textarea>
+    </div>
+
+    <button type="submit" class="submit-btn">Post Job</button>
+  </form>
+</section>
+
+<footer class="footer">
+  © 2025 LocalJobs | Employer Panel
+</footer>
+<script>
+const menuToggle=document.getElementById("menuToggle");
+const navLinks=document.getElementById("navLinks");
+
+menuToggle.addEventListener("click",()=>{
+  navLinks.classList.toggle("active");
+})
+
+
+
+  const form = document.getElementById('jobForm');
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+
+  const data = {
+  title: form.title.value,
+  company_name: form.company_name.value,
+  location: form.location.value,
+  salary: form.salary.value,
+  job_description: form.job_description.value
+};
+
+
+    const res = await fetch('http://localhost:3000/api/jobs', {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify(data)
+    });
+
+    const result = await res.json();
+    alert(result.message);
+    form.reset();
+  });
+</script>
+</body>
+</html>
+
