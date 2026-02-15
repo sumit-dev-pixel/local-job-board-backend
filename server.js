@@ -9,16 +9,14 @@ app.use(bodyParser.json());
 app.use(express.static('public'));
 
 // MySQL connection
-const db = mysql.createConnection({
-    host: 'localhost',
-    user: 'root',      // MySQL username
-    password: 'Root',      // MySQL password
-    database: 'job_portal'
-});
+const db = mysql.createConnection(process.env.DATABASE_URL);
 
 db.connect(err => {
-    if (err) throw err;
-    console.log('MySQL Connected...');
+   if (err) {
+   console.error("Database connection failed:", err);
+} else {
+   console.log("MySQL Connected...");
+}
 });
 
 // API to get all jobs
@@ -28,6 +26,7 @@ app.get('/api/jobs', (req, res) => {
         res.json(results);
     });
 });
+
 
 // API to post new job
 app.post('/api/jobs', (req, res) => {
