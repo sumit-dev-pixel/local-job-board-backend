@@ -92,6 +92,7 @@ menuToggle.addEventListener("click",()=>{
 
 async function loadJobs() {
   const res = await fetch("https://local-job-board-backend-production.up.railway.app/api/jobs");
+
   const jobs = await res.json();
 
   const jobsList = document.getElementById("jobsList");
