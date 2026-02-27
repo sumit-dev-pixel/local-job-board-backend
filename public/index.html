@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Local Job Board | Find Jobs Near You</title>
+  <link rel="stylesheet" href="indexstyle.css">
+ <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+
+</head>
+
+<body>
+
+
+<header class="navbar">
+
+  <div class="logo">
+    Local<span>Jobs</span>
+  </div>
+
+  <!-- Hamburger Icon -->
+  <div class="menu-toggle" id="menuToggle">
+    ☰
+  </div>
+
+  <nav class="nav-links" id="navLinks">
+    <a href="index.html">Home</a>
+    <a href="find-job.html">Search Jobs</a>
+    <a href="post-job.html">Post Job</a>
+    
+  </nav>
+     <a href="signup.html" class="login-btn">Signup</a>
+</header>
+
+
+<section class="hero">
+  <div class="hero-text">
+    <h1>Find Trusted <br><span>Local Jobs Near You</span></h1>
+    <p>A smart platform connecting local workers and employers for quick & reliable job opportunities.</p>
+    <div class="hero-btns">
+      <button class="btn-primary"><a href="jobs.html">Search Jobs</a></button>
+      <button class="btn-secondary"><a href="post-job.html">Post Job</a></button>
+    </div>
+  </div>
+  <div class="hero-img">
+    <img src="images/hero section.png">
+  </div>
+</section>
+
+<section class="features">
+  <div class="feature-card">
+    <h3>💰 Fair Salary</h3>
+    <p>Transparent payment system ensuring fair wages for every worker.</p>
+  </div>
+  <div class="feature-card">
+    <h3>🛡️ Trusted Employers</h3>
+    <p>Only verified job providers to ensure worker safety and trust.</p>
+  </div>
+  <div class="feature-card">
+    <h3>📲 Easy Apply</h3>
+    <p>Apply instantly using mobile number & OTP-no lengthy forms.</p>
+    
+  </div>
+</section>
+
+<section class="categories">
+  <h2>Popular Job Categories</h2>
+  <div class="category-grid">
+    <div class="cat">Delivery Boy</div>
+    <div class="cat">Electrician</div>
+    <div class="cat">Security Guard</div> 
+    <div class="cat">Cashier</div>
+    <div class="cat">Data Entry</div>
+    <div class="cat">Driver</div>
+  </div>
+</section>
+
+<section class="how-it-works">
+  <h2>How It Works</h2>
+  <div class="steps">
+    <div class="step">
+      <span>1</span>
+      <p>Signup using mobile number & OTP</p>
+    </div>
+    <div class="step">
+      <span>2</span>
+      <p>Search or post jobs near your area</p>
+    </div>
+    <div class="step">
+      <span>3</span>
+      <p>Apply & connect directly</p>
+    </div>
+  </div>
+</section>
+
+<section class="testimonial">
+  <h2>What Our Users Say</h2>
+
+  <div class="testimonial-wrapper">
+
+    <!-- Worker Testimonial -->
+    <div class="testi-box">
+      <img src="images/aditya worker.png" alt="Worker">
+      <p>
+        “I found electrician work in my nearby area within one day.  
+        Very easy and trusted platform.”
+      </p>
+      <h4>Aditya Singh</h4>
+      <span class="role">Verified Local Worker</span>
+    </div>
+
+    <!-- Employer Testimonial -->
+    <div class="testi-box">
+      <img src="images/shivam employer.png" alt="Employer">
+      <p>
+        “I was able to hire a verified electrician quickly without any middleman.  
+        The process was simple and reliable.”
+      </p>
+      <h4>Shivam Yadav</h4>
+      <span class="role">Verified Employer</span>
+    </div>
+
+  </div>
+</section>
+
+
+<footer>
+  <p>© 2025 Local Job Board | TY BSc IT Academic Project</p>
+</footer>
+<script>
+const menuToggle=document.getElementById("menuToggle");
+const navLinks=document.getElementById("navLinks");
+
+menuToggle.addEventListener("click",()=>{
+  navLinks.classList.toggle("active");
+})
+</script>
+
+</body>
+</html>
