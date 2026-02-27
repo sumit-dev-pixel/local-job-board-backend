@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Find Jobs | LocalJobs</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <link rel="stylesheet" href="find-job.css">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+<!-- HEADER -->
+<header class="header">
+  <div class="logo">
+    Local<span>Jobs</span>
+  </div>
+
+  <!-- Hamburger Icon -->
+  <div class="menu-toggle" id="menuToggle">
+    ☰
+  </div>
+
+  <nav class="nav" id="navLinks">
+    <a href="index.html">Home</a>
+    <a href="find-job.html" class="active"> Search Jobs</a>
+    <a href="post-job.html">Post Job</a>
+  </nav>
+
+  <a href="signup.html" class="login-btn">signup</a>
+</header>
+
+<!-- PAGE TITLE -->
+<section class="page-title">
+  <h1>Find Jobs Near You</h1>
+  <p>Search verified local jobs with trusted employers</p>
+</section>
+
+<!-- MAIN LAYOUT -->
+<section class="job-layout">
+
+  <!-- FILTER PANEL -->
+  <aside class="filter-panel">
+    <h3>Filter Jobs</h3>
+
+    <div class="filter-group">
+      <label>Keyword</label>
+      <input type="text" placeholder="Electrician, Driver...">
+    </div>
+
+    <div class="filter-group">
+      <label>Location</label>
+      <select>
+        <option>Mumbai</option>
+        <option>Pune</option>
+        <option>Delhi</option>
+      </select>
+    </div>
+
+   
+
+    <button class="filter-btn">Apply Filters</button>
+  </aside>
+
+  <!-- JOB LIST (DYNAMIC) -->
+  <div class="job-list" id="jobsList">
+    <!-- MySQL jobs yahin aayengi -->
+  </div>
+
+</section>
+
+<footer class="footer">
+  © 2025 Local Job Board | TY BSc IT Academic Project
+</footer>
+
+<script>
+  const menuToggle=document.getElementById("menuToggle");
+const navLinks=document.getElementById("navLinks");
+
+menuToggle.addEventListener("click",()=>{
+  navLinks.classList.toggle("active");
+})
+
+
+async function loadJobs() {
+  const res = await fetch("http://localhost:3000/api/jobs");
+  const jobs = await res.json();
+
+  const jobsList = document.getElementById("jobsList");
+  jobsList.innerHTML = "";
+
+  jobs.forEach(job => {
+    const card = document.createElement("div");
+    card.className = "job-card";
+
+    card.innerHTML = `
+      <div class="job-info">
+        <h3>${job.title}</h3>
+        <p class="company">${job.company_name}</p>
+        <p class="details">
+          📍 ${job.location} • ${job.job_type || "Full Time"} • ₹${job.salary}
+        </p>
+        <p class="details">${job.job_description}</p>
+      </div>
+
+      <div class="job-action">
+        <span class="tag verified">Verified</span>
+        <a href="apply.html?job_id=${job.id}">Apply</a>
+      </div>
+    `;
+
+    jobsList.appendChild(card);
+  });
+}
+
+loadJobs();
+
+document.querySelector(".filter-btn").addEventListener("click", async function () {
+
+  const keyword = document.querySelector(".filter-group input").value.toLowerCase();
+  const location = document.querySelector(".filter-group select").value;
+
+  const res = await fetch("http://localhost:3000/api/jobs");
+  const jobs = await res.json();
+
+  const jobsList = document.getElementById("jobsList");
+  jobsList.innerHTML = "";
+
+  const filteredJobs = jobs.filter(job => {
+
+    const matchKeyword = job.title.toLowerCase().includes(keyword);
+    const matchLocation = job.location === location;
+
+    return matchKeyword && matchLocation;
+  });
+
+  filteredJobs.forEach(job => {
+    const card = document.createElement("div");
+    card.className = "job-card";
+
+    card.innerHTML = `
+      <div class="job-info">
+        <h3>${job.title}</h3>
+        <p class="company">${job.company_name}</p>
+        <p class="details">
+          📍 ${job.location} • ₹${job.salary}
+        </p>
+        <p class="details">${job.job_description}</p>
+      </div>
+
+      <div class="job-action">
+        <span class="tag verified">Verified</span>
+        <a href="apply.html?job_id=${job.id}">Apply</a>
+      </div>
+    `;
+
+    jobsList.appendChild(card);
+  });
+
+});
+
+</script>
+
+</body>
+</html>
