@@ -27,7 +27,7 @@
     <a href="post-job.html">Post Job</a>
   </nav>
 
-  <a href="#" class="login-btn">Login</a>
+  <a href="signup.html" class="login-btn">signup</a>
 </header>
 
 <!-- PAGE TITLE -->
@@ -57,15 +57,7 @@
       </select>
     </div>
 
-    <div class="filter-group">
-      <label>Job Type</label>
-      <div class="checkbox">
-        <input type="checkbox"> Full Time
-      </div>
-      <div class="checkbox">
-        <input type="checkbox"> Part Time
-      </div>
-    </div>
+   
 
     <button class="filter-btn">Apply Filters</button>
   </aside>
@@ -78,7 +70,7 @@
 </section>
 
 <footer class="footer">
-  © 2025 LocalJobs | TY BSc IT Project
+  © 2025 Local Job Board | TY BSc IT Academic Project
 </footer>
 
 <script>
@@ -91,8 +83,7 @@ menuToggle.addEventListener("click",()=>{
 
 
 async function loadJobs() {
-  const res = await fetch("https://local-job-board-backend-production.up.railway.app/api/jobs");
-
+  const res = await fetch("http://localhost:3000/api/jobs");
   const jobs = await res.json();
 
   const jobsList = document.getElementById("jobsList");
@@ -114,7 +105,7 @@ async function loadJobs() {
 
       <div class="job-action">
         <span class="tag verified">Verified</span>
-        <button>Apply</button>
+        <a href="apply.html?job_id=${job.id}">Apply</a>
       </div>
     `;
 
@@ -123,6 +114,51 @@ async function loadJobs() {
 }
 
 loadJobs();
+
+document.querySelector(".filter-btn").addEventListener("click", async function () {
+
+  const keyword = document.querySelector(".filter-group input").value.toLowerCase();
+  const location = document.querySelector(".filter-group select").value;
+
+  const res = await fetch("http://localhost:3000/api/jobs");
+  const jobs = await res.json();
+
+  const jobsList = document.getElementById("jobsList");
+  jobsList.innerHTML = "";
+
+  const filteredJobs = jobs.filter(job => {
+
+    const matchKeyword = job.title.toLowerCase().includes(keyword);
+    const matchLocation = job.location === location;
+
+    return matchKeyword && matchLocation;
+  });
+
+  filteredJobs.forEach(job => {
+    const card = document.createElement("div");
+    card.className = "job-card";
+
+    card.innerHTML = `
+      <div class="job-info">
+        <h3>${job.title}</h3>
+        <p class="company">${job.company_name}</p>
+        <p class="details">
+          📍 ${job.location} • ₹${job.salary}
+        </p>
+        <p class="details">${job.job_description}</p>
+      </div>
+
+      <div class="job-action">
+        <span class="tag verified">Verified</span>
+        <a href="apply.html?job_id=${job.id}">Apply</a>
+      </div>
+    `;
+
+    jobsList.appendChild(card);
+  });
+
+});
+
 </script>
 
 </body>

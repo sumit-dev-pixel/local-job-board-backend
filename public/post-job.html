@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -15,13 +14,15 @@
   <div class="menu-toggle" id="menuToggle">☰</div>
 
   <nav class="nav-links" id="navLinks">
+<a href="application.html">
+    <button>View Applications</button>
+</a>
     <a href="index.html">Home</a>
     <a href="find-job.html">Search Jobs</a>
-    
     <a href="post-job.html">Post Job</a>
   </nav>
 
-  <a href="#" class="login-btn">Employer Login</a>
+  <a href="signup.html" class="login-btn">signup</a>
 </header>
 
 <section class="page-title">
@@ -54,24 +55,29 @@
       </div>
     </div>
 
-    <div class="form-row">
-      <div class="form-group">
+<div class="form-row">
+
+    <div class="form-group">
         <label>Job Type</label>
         <select id="type">
-          <option>Full Time</option>
-          <option>Part Time</option>
+            <option>Full Time</option>
+            <option>Part Time</option>
         </select>
-      </div>
+    </div>
 
-      <div class="form-group">
+    <div class="form-group">
         <label>Experience</label>
         <select id="experience">
-          <option>Fresher</option>
-          <option>1-2 Years</option>
-          <option>2+ Years</option>
+            <option>Fresher</option>
+            <option>1-2 Years</option>
+            <option>2+ Years</option>
         </select>
-      </div>
     </div>
+
+</div>
+
+
+
 
     <div class="form-group">
       <label>Job Description</label>
@@ -82,34 +88,45 @@
   </form>
 </section>
 
+
+
 <footer class="footer">
-  © 2025 LocalJobs | Employer Panel
+  © 2025 Local Job Board | TY BSc IT Academic Project
 </footer>
+
 <script>
-const menuToggle=document.getElementById("menuToggle");
-const navLinks=document.getElementById("navLinks");
+const menuToggle = document.getElementById("menuToggle");
+const navLinks = document.getElementById("navLinks");
 
-menuToggle.addEventListener("click",()=>{
+menuToggle.addEventListener("click", () => {
   navLinks.classList.toggle("active");
-})
+});
 
+// =================== POST JOB ===================
 
+const form = document.getElementById('jobForm');
 
-  const form = document.getElementById('jobForm');
-  form.addEventListener('submit', async (e) => {
-    e.preventDefault();
+form.addEventListener('submit', async (e) => {
+  e.preventDefault();
+
+  const employerId = localStorage.getItem("user_id");
+
+  if(!employerId){
+    alert("Please login first!");
+    return;
+  }
 
   const data = {
-  title: form.title.value,
-  company_name: form.company_name.value,
-  location: form.location.value,
-  salary: form.salary.value,
-  job_description: form.job_description.value
-};
+    title: document.getElementById("title").value,
+    company_name: document.getElementById("company_name").value,
+    location: document.getElementById("location").value,
+    salary: document.getElementById("salary").value,
+    job_description: document.getElementById("job_description").value,
+    employer_id: employerId
+  };
 
-
-    const res = await fetch('https://local-job-board-backend-production.up.railway.app/api/jobs', {
-
+  try {
+    const res = await fetch('http://localhost:3000/api/jobs', {
       method: 'POST',
       headers: {'Content-Type': 'application/json'},
       body: JSON.stringify(data)
@@ -118,8 +135,56 @@ menuToggle.addEventListener("click",()=>{
     const result = await res.json();
     alert(result.message);
     form.reset();
+  } catch (error) {
+    alert("Error posting job");
+  }
+});
+
+
+// =================== VIEW APPLICATIONS ===================
+
+function viewApplications(){
+
+  const employerId = localStorage.getItem("user_id");
+
+  if(!employerId){
+    alert("Please login first!");
+    return;
+  }
+
+  fetch("http://localhost:3000/employer/applications/" + employerId)
+  .then(res => res.json())
+  .then(data => {
+
+    const container = document.getElementById("applicationsContainer");
+    container.innerHTML = "";
+
+    if(data.length === 0){
+      container.innerHTML = "<p style='text-align:center;'>No Applications Yet</p>";
+      return;
+    }
+
+    data.forEach(app => {
+      container.innerHTML += `
+        <div style="border:1px solid #ccc; padding:15px; margin:10px; border-radius:8px;">
+          <h3>${app.title}</h3>
+          <p><strong>Name:</strong> ${app.name}</p>
+          <p><strong>Email:</strong> ${app.email}</p>
+          <p><strong>Phone:</strong> ${app.phone}</p>
+          <p>
+            <strong>Resume:</strong> 
+            <a href="${app.resume}" target="_blank">View Resume</a>
+          </p>
+        </div>
+      `;
+    });
+
+  })
+  .catch(error => {
+    alert("Error loading applications");
   });
+}
 </script>
+
 </body>
 </html>
-
