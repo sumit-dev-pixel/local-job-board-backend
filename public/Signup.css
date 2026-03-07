@@ -1,0 +1,97 @@
+/* Google Font */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap');
+
+/* Reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Body Styling */
+body {
+    font-family: 'Poppins', sans-serif;
+    background: linear-gradient(to bottom, #f8fbff, #eaf2ff);
+    height: 100vh;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+/* Heading */
+h2 {
+    margin-bottom: 20px;
+    font-size: 26px;
+    font-weight: 600;
+    color: #333;
+}
+
+/* Form Card */
+form {
+    background: #ffffff;
+    width: 400px;
+    padding: 40px;
+    border-radius: 12px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+}
+
+/* Input Fields */
+form input,
+form select {
+    width: 100%;
+    padding: 12px;
+    margin-bottom: 18px;
+    border-radius: 6px;
+    border: 1px solid #dcdcdc;
+    font-size: 14px;
+    background: #fafafa;
+}
+
+/* Input Focus Effect */
+form input:focus,
+form select:focus {
+    border-color: #008bdc;
+    background: #fff;
+    outline: none;
+}
+
+/* Button */
+form button {
+    width: 100%;
+    padding: 12px;
+    border: none;
+    border-radius: 6px;
+    background: #008bdc;
+    color: #fff;
+    font-size: 15px;
+    font-weight: 500;
+    cursor: pointer;
+}
+
+form button:hover {
+    background: #006bb3;
+}
+
+/* Login Link */
+form a {
+    display: block;
+    margin-top: 15px;
+    text-align: center;
+    font-size: 14px;
+    color: #008bdc;
+    text-decoration: none;
+}
+
+form a:hover {
+    text-decoration: underline;
+}
+
+/* Mobile Responsive */
+@media (max-width: 500px) {
+    form {
+        width: 90%;
+        padding: 25px;
+    }
+}
